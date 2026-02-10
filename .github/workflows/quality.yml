@@ -23,5 +23,8 @@ jobs:
           echo "Pipeline rodando com sucesso"
           echo "Projeto Front-end estático"
 
+      - name: Lint HTML (HTMLHint)
+        uses: cycjimmy/semantic-release-action@v4
+
       - name: Finalização
         run: echo "CI finalizado 🚀"
