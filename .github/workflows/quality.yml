@@ -1,4 +1,4 @@
-name: CI - VidaPlena Saúde Integrada
+name: CI - Quality Software
 
 on:
   push:
@@ -18,13 +18,23 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Verificação básica
-        run: |
-          echo "Pipeline rodando com sucesso"
-          echo "Projeto Front-end estático"
+      - name: Verificar se a pasta src existe
+        run: test -d src
+
+      - name: Verificar se o CSS está no caminho correto
+        run: test -f src/css/style.css
 
       - name: Lint HTML (HTMLHint)
-        uses: cycjimmy/semantic-release-action@v4
+        uses: linthtml/htmlhint-action@v1
+        with:
+          target_pattern: 'src/index.html'
 
-      - name: Finalização
-        run: echo "CI finalizado 🚀"
+      - name: Verificar tag footer com nome do aluno
+        run: |
+          if ! grep -q "<footer>.*Matheus Meigre.*</footer>" src/index.html; then
+            echo "Erro: O HTML deve conter uma tag <footer> com o nome do aluno Matheus Meigre"
+            exit 1
+          fi
+
+      - name: Mensagem de Sucesso
+        run: echo "O código do aluno Matheus Meigre foi auditado, está seguindo as normas corretas e está pronto para o deploy!"
