@@ -24,10 +24,16 @@ jobs:
       - name: Verificar se o CSS está no caminho correto
         run: test -f src/css/style.css
 
-      - name: Lint HTML (HTMLHint)
-        uses: linthtml/htmlhint-action@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          target_pattern: 'src/index.html'
+          node-version: '20'
+
+      - name: Instalar HTMLHint
+        run: npm install -g htmlhint
+
+      - name: Lint HTML (HTMLHint)
+        run: htmlhint src/index.html
 
       - name: Verificar tag footer com nome do aluno
         run: |
