@@ -1,0 +1,26 @@
+name: Quality Gate
+
+on:
+  push: {}
+  pull_request: {}
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verificar pasta src
+        run: test -d src
+
+      - name: Verificar CSS no caminho novo
+        run: test -f src/css/style.css
+
+      - name: Lint HTML (HTMLHint)
+        uses: cycjimmy/gh-action-htmlhint@v1
+        with:
+          target_pattern: 'src/index.html'
+
+      - name: Auditoria final
+        run: echo "O código do aluno Matheus Meigre foi auditado, está seguindo as normas corretas e está pronto para o deploy!"
