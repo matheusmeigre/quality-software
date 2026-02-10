@@ -18,7 +18,7 @@ jobs:
         run: test -f src/css/style.css
 
       - name: Lint HTML (HTMLHint)
-        uses: cycjimmy/gh-action-htmlhint@v1
+        uses: cycjimmy/gh-action-htmlhint@v1.4.3
         with:
           target_pattern: 'src/index.html'
 
